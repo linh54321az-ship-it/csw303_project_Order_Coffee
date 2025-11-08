@@ -1,5 +1,10 @@
 // Admin Dashboard Script
 
+// VND Currency Formatter
+function formatVND(amount) {
+    return amount.toLocaleString('vi-VN') + '₫';
+}
+
 // Sample Data
 let orders = [];
 let customers = [];
@@ -92,7 +97,7 @@ function updateDashboard() {
     const totalCustomers = customers.length;
 
     // Update UI
-    document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
+    document.getElementById('totalRevenue').textContent = formatVND(totalRevenue);
     document.getElementById('totalOrders').textContent = totalOrders;
     document.getElementById('pendingOrders').textContent = pendingOrders;
     document.getElementById('totalCustomers').textContent = totalCustomers;
@@ -120,7 +125,7 @@ function updateRecentOrders() {
                 <p style="color: #666; font-size: 0.85rem;">${order.customerName}</p>
             </div>
             <div style="text-align: right;">
-                <strong style="color: var(--accent-color);">$${order.total.toFixed(2)}</strong>
+                <strong style="color: var(--accent-color);">${formatVND(order.total)}</strong>
                 <p><span class="status-badge status-${order.status}">${order.status}</span></p>
             </div>
         </div>
@@ -160,7 +165,7 @@ function updateTopSelling() {
                 <p style="color: #666; font-size: 0.85rem;">${data.count} sold</p>
             </div>
             <div style="text-align: right;">
-                <strong style="color: var(--primary-color);">$${data.revenue.toFixed(2)}</strong>
+                <strong style="color: var(--primary-color);">${formatVND(data.revenue)}</strong>
             </div>
         </div>
     `).join('');
@@ -199,7 +204,7 @@ function loadOrders() {
             <td><strong>#${order.id}</strong></td>
             <td>${order.customerName}</td>
             <td>${order.items.length} items</td>
-            <td><strong>$${order.total.toFixed(2)}</strong></td>
+            <td><strong>${formatVND(order.total)}</strong></td>
             <td><span class="status-badge status-${order.status}">${order.status}</span></td>
             <td>${new Date(order.date).toLocaleDateString()}</td>
             <td>
@@ -294,7 +299,7 @@ function viewOrder(orderId) {
                                     ` : ''}
                                 </p>
                             </div>
-                            <strong style="color: var(--accent-color);">$${((item.totalPrice || item.price) * item.quantity).toFixed(2)}</strong>
+                            <strong style="color: var(--accent-color);">${formatVND((item.totalPrice || item.price) * item.quantity)}</strong>
                         </div>
                     </div>
                 `).join('')}
@@ -303,22 +308,22 @@ function viewOrder(orderId) {
             <div style="background: var(--primary-color); color: white; padding: 1.5rem; border-radius: 10px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Subtotal:</span>
-                    <strong>$${order.subtotal.toFixed(2)}</strong>
+                    <strong>${formatVND(order.subtotal)}</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Tax (10%):</span>
-                    <strong>$${order.tax.toFixed(2)}</strong>
+                    <strong>${formatVND(order.tax)}</strong>
                 </div>
                 ${order.discount > 0 ? `
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                         <span>Discount:</span>
-                        <strong>-$${order.discount.toFixed(2)}</strong>
+                        <strong>-${formatVND(order.discount)}</strong>
                     </div>
                 ` : ''}
                 <hr style="margin: 1rem 0; border-color: rgba(255,255,255,0.3);">
                 <div style="display: flex; justify-content: space-between; font-size: 1.3rem;">
                     <strong>Total:</strong>
-                    <strong>$${order.total.toFixed(2)}</strong>
+                    <strong>${formatVND(order.total)}</strong>
                 </div>
             </div>
         </div>
@@ -378,7 +383,7 @@ function loadCustomers() {
                 <td>${customer.email}</td>
                 <td><strong>${customer.points || 0}</strong> pts</td>
                 <td>${customerOrders.length}</td>
-                <td><strong>$${totalSpent.toFixed(2)}</strong></td>
+                <td><strong>${formatVND(totalSpent)}</strong></td>
                 <td>
                     <div class="action-btns">
                         <button class="btn-action btn-view" onclick="viewCustomer('${customer.email}')">
@@ -403,7 +408,7 @@ function loadMenuItems() {
             <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">${item.name}</h3>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${item.description}</p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <span style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color);">$${item.price.toFixed(2)}</span>
+                <span style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color);">${formatVND(item.price)}</span>
                 <span class="status-badge" style="background: var(--secondary-color); color: var(--dark-color);">${item.category}</span>
             </div>
             <div class="action-btns">

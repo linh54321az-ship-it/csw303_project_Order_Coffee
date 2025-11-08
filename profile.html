@@ -692,7 +692,7 @@
                     <div class="points-label">Available Points</div>
                 </div>
                 <p style="text-align: center; color: #666; margin-top: 1rem;">
-                    <i class="fas fa-info-circle"></i> Earn 1 point for every $1 spent
+                    <i class="fas fa-info-circle"></i> Kiếm 1 điểm cho mỗi 25.000₫ chi tiêu
                 </p>
                 <p style="text-align: center; margin-top: 0.5rem;">
                     <a href="index.html#rewards" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
@@ -740,12 +740,17 @@
         let currentUser = null;
         let isEditing = false;
 
+        // VND Currency Formatter
+        function formatVND(amount) {
+            return amount.toLocaleString('vi-VN') + '₫';
+        }
+
         // Rewards Data
         const rewardsData = [
             { id: 1, name: '10% Off', points: 100, discount: 10, type: 'percentage' },
             { id: 2, name: '15% Off', points: 150, discount: 15, type: 'percentage' },
-            { id: 3, name: 'Free Coffee', points: 75, discount: 5, type: 'fixed' },
-            { id: 4, name: '$2 Off', points: 50, discount: 2, type: 'fixed' }
+            { id: 3, name: 'Free Coffee', points: 75, discount: 125000, type: 'fixed' },
+            { id: 4, name: '50.000₫ Off', points: 50, discount: 50000, type: 'fixed' }
         ];
 
         // Load user data on page load
@@ -881,14 +886,14 @@
                             <ul>
                                 ${order.items.slice(0, 2).map(item => `
                                     <li>
-                                        ${item.quantity}x ${item.name} - $${(item.price * item.quantity).toFixed(2)}
+                                        ${item.quantity}x ${item.name} - ${formatVND(item.price * item.quantity)}
                                     </li>
                                 `).join('')}
                                 ${order.items.length > 2 ? `<li style="color: #999;">... and ${order.items.length - 2} more item(s)</li>` : ''}
                             </ul>
                         </div>
                         <div class="order-total">
-                            Total: $${order.total.toFixed(2)}
+                            Total: ${formatVND(order.total)}
                         </div>
                         <button class="btn-view-order" onclick='viewOrderDetail(${JSON.stringify(order).replace(/'/g, "&apos;")})'>
                             <i class="fas fa-eye"></i> View Details
@@ -966,8 +971,8 @@
                                         ` : ''}
                                     </td>
                                     <td>${item.quantity}</td>
-                                    <td>$${item.price.toFixed(2)}</td>
-                                    <td><strong>$${(item.price * item.quantity).toFixed(2)}</strong></td>
+                                    <td>${formatVND(item.price)}</td>
+                                    <td><strong>${formatVND(item.price * item.quantity)}</strong></td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -979,21 +984,21 @@
                     <div class="order-summary-box">
                         <div class="order-summary-row">
                             <span>Subtotal:</span>
-                            <span>$${order.subtotal.toFixed(2)}</span>
+                            <span>${formatVND(order.subtotal)}</span>
                         </div>
                         <div class="order-summary-row">
                             <span>Tax (10%):</span>
-                            <span>$${order.tax.toFixed(2)}</span>
+                            <span>${formatVND(order.tax)}</span>
                         </div>
                         ${order.discount > 0 ? `
                             <div class="order-summary-row">
                                 <span>Discount:</span>
-                                <span>-$${order.discount.toFixed(2)}</span>
+                                <span>-${formatVND(order.discount)}</span>
                             </div>
                         ` : ''}
                         <div class="order-summary-row order-summary-total">
                             <span>Total:</span>
-                            <span>$${order.total.toFixed(2)}</span>
+                            <span>${formatVND(order.total)}</span>
                         </div>
                     </div>
                 </div>

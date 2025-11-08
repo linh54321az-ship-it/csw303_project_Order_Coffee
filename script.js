@@ -1,9 +1,14 @@
+// VND Currency Formatter
+function formatVND(amount) {
+    return amount.toLocaleString('vi-VN') + '₫';
+}
+
 // Menu Data
 const menuItems = [
     {
         id: 1,
         name: 'Espresso',
-        price: 3.50,
+        price: 87500,
         description: 'Rich and bold espresso shot',
         category: 'hot',
         image: 'linear-gradient(135deg, #6f4e37, #8B4513)'
@@ -11,7 +16,7 @@ const menuItems = [
     {
         id: 2,
         name: 'Cappuccino',
-        price: 4.50,
+        price: 112500,
         description: 'Espresso with steamed milk foam',
         category: 'hot',
         image: 'linear-gradient(135deg, #8B4513, #A0522D)'
@@ -19,7 +24,7 @@ const menuItems = [
     {
         id: 3,
         name: 'Latte',
-        price: 4.75,
+        price: 118750,
         description: 'Smooth espresso with steamed milk',
         category: 'hot',
         image: 'linear-gradient(135deg, #A0522D, #CD853F)'
@@ -27,7 +32,7 @@ const menuItems = [
     {
         id: 4,
         name: 'Americano',
-        price: 3.75,
+        price: 93750,
         description: 'Espresso with hot water',
         category: 'hot',
         image: 'linear-gradient(135deg, #6f4e37, #654321)'
@@ -35,7 +40,7 @@ const menuItems = [
     {
         id: 5,
         name: 'Iced Coffee',
-        price: 4.00,
+        price: 100000,
         description: 'Cold brewed coffee over ice',
         category: 'iced',
         image: 'linear-gradient(135deg, #4A90E2, #5AA5E2)'
@@ -43,7 +48,7 @@ const menuItems = [
     {
         id: 6,
         name: 'Iced Latte',
-        price: 5.00,
+        price: 125000,
         description: 'Cold espresso with milk and ice',
         category: 'iced',
         image: 'linear-gradient(135deg, #87CEEB, #B0E0E6)'
@@ -51,7 +56,7 @@ const menuItems = [
     {
         id: 7,
         name: 'Cold Brew',
-        price: 4.50,
+        price: 112500,
         description: 'Smooth cold brewed coffee',
         category: 'iced',
         image: 'linear-gradient(135deg, #2C3E50, #34495E)'
@@ -59,7 +64,7 @@ const menuItems = [
     {
         id: 8,
         name: 'Frappe',
-        price: 5.50,
+        price: 137500,
         description: 'Blended iced coffee drink',
         category: 'iced',
         image: 'linear-gradient(135deg, #D4A574, #E8C39E)'
@@ -67,7 +72,7 @@ const menuItems = [
     {
         id: 9,
         name: 'Caramel Macchiato',
-        price: 5.75,
+        price: 143750,
         description: 'Vanilla and caramel latte',
         category: 'special',
         image: 'linear-gradient(135deg, #D2691E, #F4A460)'
@@ -75,7 +80,7 @@ const menuItems = [
     {
         id: 10,
         name: 'Mocha',
-        price: 5.25,
+        price: 131250,
         description: 'Chocolate and espresso blend',
         category: 'special',
         image: 'linear-gradient(135deg, #3E2723, #5D4037)'
@@ -83,7 +88,7 @@ const menuItems = [
     {
         id: 11,
         name: 'Vanilla Latte',
-        price: 5.00,
+        price: 125000,
         description: 'Latte with vanilla syrup',
         category: 'special',
         image: 'linear-gradient(135deg, #F5DEB3, #FFE4B5)'
@@ -91,7 +96,7 @@ const menuItems = [
     {
         id: 12,
         name: 'Pumpkin Spice',
-        price: 6.00,
+        price: 150000,
         description: 'Seasonal pumpkin spice latte',
         category: 'special',
         image: 'linear-gradient(135deg, #FF8C00, #FFA500)'
@@ -100,10 +105,10 @@ const menuItems = [
 
 // Rewards Data
 const rewardsData = [
-    { id: 1, name: 'Free Coffee', points: 100, discount: 5.00 },
-    { id: 2, name: 'Free Pastry', points: 75, discount: 3.50 },
+    { id: 1, name: 'Free Coffee', points: 100, discount: 125000 },
+    { id: 2, name: 'Free Pastry', points: 75, discount: 87500 },
     { id: 3, name: '10% Off', points: 50, discount: 0 },
-    { id: 4, name: 'Free Upgrade', points: 150, discount: 2.00 }
+    { id: 4, name: 'Free Upgrade', points: 150, discount: 50000 }
 ];
 
 // Global State
@@ -140,7 +145,7 @@ function renderMenu(filter) {
             <div class="menu-item-content">
                 <div class="menu-item-header">
                     <h3 class="menu-item-title">${item.name}</h3>
-                    <span class="menu-item-price">$${item.price.toFixed(2)}</span>
+                    <span class="menu-item-price">${formatVND(item.price)}</span>
                 </div>
                 <p class="menu-item-description">${item.description}</p>
                 <div class="menu-item-footer">
@@ -200,7 +205,7 @@ function openOrderDetail(itemId) {
     document.getElementById('detailImage').style.background = currentOrderItem.image;
     document.getElementById('detailName').textContent = currentOrderItem.name;
     document.getElementById('detailDescription').textContent = currentOrderItem.description;
-    document.getElementById('detailPrice').textContent = `Base Price: $${currentOrderItem.price.toFixed(2)}`;
+    document.getElementById('detailPrice').textContent = `Giá gốc: ${formatVND(currentOrderItem.price)}`;
     
     // Show ice option only for iced drinks
     const iceGroup = document.getElementById('iceGroup');
@@ -228,22 +233,22 @@ function updateDetailTotal() {
     
     // Add size cost
     const size = form.querySelector('input[name="size"]:checked').value;
-    if (size === 'Medium') total += 0.50;
-    if (size === 'Large') total += 1.00;
+    if (size === 'Medium') total += 12500;
+    if (size === 'Large') total += 25000;
     
     // Add milk cost
     const milk = form.querySelector('input[name="milk"]:checked').value;
-    if (milk !== 'Regular') total += 0.50;
+    if (milk !== 'Regular') total += 12500;
     
     // Add extra shots cost
     const extraShots = parseInt(form.querySelector('input[name="extraShots"]:checked').value);
-    total += extraShots * 0.75;
+    total += extraShots * 18750;
     
     // Multiply by quantity
     const quantity = parseInt(document.getElementById('detailQuantity').textContent);
     total *= quantity;
     
-    document.getElementById('detailTotal').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('detailTotal').textContent = formatVND(total);
 }
 
 // Increase Detail Quantity
@@ -284,7 +289,7 @@ function updateCart() {
             <div class="order-item">
                 <div class="order-item-info">
                     <h4>${item.name}</h4>
-                    <p class="order-item-price">$${item.totalPrice ? item.totalPrice.toFixed(2) : item.price.toFixed(2)} x ${item.quantity}</p>
+                    <p class="order-item-price">${formatVND(item.totalPrice ? item.totalPrice : item.price)} x ${item.quantity}</p>
                     ${item.customizations ? `
                         <div class="order-item-details">
                             ${item.customizations.size ? `<div class="order-item-detail"><i class="fas fa-coffee"></i> ${item.customizations.size}</div>` : ''}
@@ -352,10 +357,10 @@ function updateOrderSummary() {
     
     const total = Math.max(0, subtotal + tax - finalDiscount);
 
-    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-    document.getElementById('discount').textContent = `-$${finalDiscount.toFixed(2)}`;
-    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('subtotal').textContent = formatVND(subtotal);
+    document.getElementById('tax').textContent = formatVND(tax);
+    document.getElementById('discount').textContent = `-${formatVND(finalDiscount)}`;
+    document.getElementById('total').textContent = formatVND(total);
     
     // Display applied reward
     displayAppliedReward();
@@ -601,8 +606,8 @@ function logoutUser(event) {
 // Open Payment Modal
 function openPaymentModal() {
     const paymentModal = document.getElementById('paymentModal');
-    const total = parseFloat(document.getElementById('total').textContent.replace('$', ''));
-    document.getElementById('paymentTotal').textContent = `$${total.toFixed(2)}`;
+    const total = parseFloat(document.getElementById('total').textContent.replace(/[^\d]/g, ''));
+    document.getElementById('paymentTotal').textContent = formatVND(total);
     paymentModal.style.display = 'block';
 }
 
@@ -622,11 +627,11 @@ function handlePayment() {
     }
 
     // Process payment
-    const subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('$', ''));
-    const tax = parseFloat(document.getElementById('tax').textContent.replace('$', ''));
-    const discount = parseFloat(document.getElementById('discount').textContent.replace('-$', ''));
-    const total = parseFloat(document.getElementById('total').textContent.replace('$', ''));
-    const pointsEarned = Math.floor(total);
+    const subtotal = parseFloat(document.getElementById('subtotal').textContent.replace(/[^\d]/g, ''));
+    const tax = parseFloat(document.getElementById('tax').textContent.replace(/[^\d]/g, ''));
+    const discount = parseFloat(document.getElementById('discount').textContent.replace(/[^\d]/g, ''));
+    const total = parseFloat(document.getElementById('total').textContent.replace(/[^\d]/g, ''));
+    const pointsEarned = Math.floor(total / 25000);
 
     // Create order object for admin
     const order = {
@@ -893,10 +898,10 @@ function handleOrderDetailSubmit() {
     
     // Calculate total price per item
     let itemPrice = currentOrderItem.price;
-    if (customizations.size === 'Medium') itemPrice += 0.50;
-    if (customizations.size === 'Large') itemPrice += 1.00;
-    if (customizations.milk !== 'Regular') itemPrice += 0.50;
-    itemPrice += customizations.extraShots * 0.75;
+    if (customizations.size === 'Medium') itemPrice += 12500;
+    if (customizations.size === 'Large') itemPrice += 25000;
+    if (customizations.milk !== 'Regular') itemPrice += 12500;
+    itemPrice += customizations.extraShots * 18750;
     
     // Add to cart
     const cartItem = {
