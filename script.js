@@ -684,6 +684,7 @@ function handlePayment() {
     appliedDiscount = 0;
     appliedReward = null;
     updateCart();
+    renderRewards(); // Re-render rewards to reset the UI
 
     document.getElementById('paymentModal').style.display = 'none';
     showNotification(`Payment successful! Order ${order.id} created. You earned ${pointsEarned} points!`);
